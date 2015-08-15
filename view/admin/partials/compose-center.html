@@ -1,0 +1,63 @@
+<div class="row">
+	
+	<div id="write" class="z-depth-1 col m4">
+	
+		<form action="/admin/composer/save/{{post.hashid}}" method="POST">
+			
+			<input id="header" type="hidden" name="header" value="{{post.header}}"/>
+
+			<div class="input-field s12">
+				<input id="headline" type="text" name="headline" value="{{post.headline}}" required>
+				<label for="headline">Headline</label>
+			</div>
+
+			<div class="input-field s12">
+				<textarea id="body" name="body" class="materialize-textarea" required>{{post.body}}</textarea>
+				<label for="body">Article</label>
+			</div>
+
+			<button class="right btn waves-effect waves-light tooltipped" type="submit" value="Save" data-position="bottom" data-delay="25" data-tooltip="Save">
+				<i class="material-icons">backup</i>
+				<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+			</button>
+			
+			<button class="right btn waves-effect waves-light orange tooltipped" type="publish" value="Publish" data-position="bottom" data-delay="25" data-tooltip="Publish">
+				<i class="material-icons">send</i>
+				<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+			</button>
+
+		</form>
+		
+	</div>
+
+</div>
+
+
+<div id="preview" class="article">
+		
+	<article></article>
+	
+</div>
+
+<div id="article-template" class="hide">
+	{% raw %}
+	    <div class="article-header z-depth-1">
+	        <div id="header-dropzone" class="header-image upload valign-wrapper">
+	        	<div class="header-content" style="background-image: url(/{{article.header}});"></div>
+	        	<div class="header-bg-gradient"></div>
+	        	<div class="dz-default dz-message"><span><p class="valign"><i class="material-icons">add</i> Click to upload header image</p></span></div>
+	        </div>
+	        <div class="header-info-wrapper">
+	            <div class="header-info">
+	                <h2 class="headline">{{article.headline}}</h2>
+	                <p class="article-stats"><a href="/author/{{article.author}}"><span class="author"><i class="material-icons">person</i>{{article.author}}</span></a><span class="time"><i class="material-icons">schedule</i>{{article.date}}</span></p>
+	            </div>
+	        </div>
+	    </div>
+	    <div id="content-wrapper" class="row">
+	        <div class="article-body z-depth-1">
+	            <div class="post-content bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
+	        </div>
+	    </div>
+	{% endraw %}
+</div>

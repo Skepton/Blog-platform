@@ -1,0 +1,15 @@
+{% for article in articles %}
+    
+    <article class="collection-item row">
+        <div class="item-header col s4"><a href="/article/{{article.slug}}"><img src="/images/article-cache/{{article.hashid}}_4x2.jpg" /></a></div>
+        <div class="item-info col s8">
+            <h2 class="headline"><a href="/article/{{article.slug}}">{{article.headline}}</a></h2>
+            <div class="item-stats">
+                <span class="author"><i class="material-icons">person</i>{{article.author}}</span>
+                <span class="time"><i class="material-icons">schedule</i>{{article.date}}</span>
+            </div>
+            <div class="excerpt bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
+        </div>
+    </article>
+
+{% endfor %}

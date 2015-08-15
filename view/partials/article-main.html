@@ -1,0 +1,31 @@
+{% for article in articles %}
+
+	<div class="article-header parallax-container z-depth-1">
+		
+		<div class="header-content parallax">
+			<img class="article-parallax-image" src="/{{article.header}}" / >
+		</div>
+		<div class="header-bg-gradient"></div>
+		<div class="header-info-wrapper">
+			<div class="header-info">
+				<h2 class="headline">{{article.headline}}</h2>
+				<p class="article-stats"><a href="/author/{{article.author}}"><span class="author"><i class="material-icons">person</i>{{article.author}}</span></a><span class="time"><i class="material-icons">schedule</i>{{article.date}}</span></p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="content-wrapper" class="row">
+		
+		<div class="article-body z-depth-1">
+			<div class="post-content bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
+			<div class="comment-wrapper">
+				<h3>Article Comments</h3>
+				<div id="comment-content"></div>
+			</div>
+		</div>
+		
+		<script type="text/javascript"> var articleId = "{{article.hashid}}"; </script>
+		
+	</div>
+
+{% endfor %}

@@ -1,0 +1,32 @@
+{
+	"name": "Blogging-Platform",
+	"version": "0.0.1",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "~4.2.0",
+    "static-favicon": "*",
+		"body-parser": "~1.0.0",
+		"connect-multiparty": "*",
+		"cookie-parser": "~1.0.1",
+		"debug": "~0.7.4",
+		"swig": "*",
+		"lwip": "*",
+		"async": "*",
+		"redis": "*",
+		"connect-redis": "latest",
+		"passport": "~0.2.0",
+		"passport-local": "~1.0.0",
+		"express-session": "*",
+		"async": "*",
+		"request": "*",
+		"moment": "*",
+		"bcrypt": "*",
+		"crypto": "*",
+		"xregexp": "*",
+		"sqlite3": "*",
+		"knex": "*"
+	}
+}

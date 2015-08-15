@@ -1,0 +1,61 @@
+.post-list-wrapper.post-list-wrapper {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    padding: 1rem;
+    border-top: none;
+    .collection-item {
+        padding: 1.5rem;
+        .item-header {
+            overflow: hidden;
+            padding: 0;
+            //@include border-radius(6px);
+            img {
+                display: block;
+                width: 100%;
+            }
+        }
+        .item-info {
+            padding-left: 1.5rem;
+            .headline {
+                font-size: 1.5rem;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                margin: 0.5rem 0;
+                a:hover {
+                    color: $link-hover-color;
+                }
+            }
+            .item-stats {
+                vertical-align: middle;
+                line-height: 1.25rem;
+                font-size: 0.9rem;
+                font-weight: 300;
+                color: #888;
+                width: 100%;
+                padding: 0.5rem;
+                border-left: 0.2rem solid $primary-color;
+                i {
+                    font-size: 1.25rem;
+                    vertical-align: middle;
+                    margin-top: -0.2rem;
+                    margin-right: 0.25rem;
+                }
+                span:last-of-type {
+                    margin-left: 1rem;
+                    &:before {
+                        content: "|";
+                        margin-right: 1rem;
+                    }
+                }
+            }
+            .excerpt {
+                font-size: 1.1rem;
+                font-weight: 300;
+                color: #888;
+                letter-spacing: 0.5px;
+                line-height: 1.75rem;
+            }
+        }
+    }
+}

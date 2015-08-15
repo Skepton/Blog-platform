@@ -1,0 +1,34 @@
+#nav {
+    z-index: 1000;
+    display: table;
+    min-height: 84px;
+    text-align: center;
+    
+    @media #{$medium-and-down} {
+        min-height: 0;
+    }
+    
+    .nav-wrapper {
+        max-width: $max-width;
+        margin: 0 auto;
+        text-align: left;
+        display: table;
+        width: 100%;
+        background-color: white;
+
+        #top-line {
+            display: table;
+            width: 100%;
+            .brand-logo {
+                font-size: 2rem;
+            }
+            #top-nav {
+                float: right;
+            }
+        }
+        
+        #main-nav {
+            float: left;
+        }
+    }
+}

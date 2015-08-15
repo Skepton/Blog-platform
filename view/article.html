@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<title>Article | {{article.headline}}</title>
+		<link rel="stylesheet" href="/css/style.css" media="screen,projection">
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Sans+Pro:300,300i,400,400i,600,700">
+		<meta name="viewport" content="width=device-width initial-scale=1" user-scalable="no">
+	
+	</head>
+	
+	<body class="article">
+		
+		{% include "partials/menu.html" %}
+		
+		{% include "partials/article-main.html" %}
+		
+	    <script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/materialize.min.js"></script>
+		<script type="text/javascript" src="/js/init.js"></script>
+		<script type="text/javascript" src="/js/blog.js"></script>
+	</body>
+
+</html>

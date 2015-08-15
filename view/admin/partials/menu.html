@@ -1,0 +1,37 @@
+<div class="navbar-fixed">
+    
+    <nav id="nav">
+        <div class="nav-wrapper">
+        
+            <div id="top-line">
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <a href="/" class="brand-logo">Blogging</a>
+                <ul id="top-nav">
+                    {% if user && user.admin === 1 %}
+                        <li><a href="/admin">Admin</a></li>
+                    {% endif %}
+                    {% if user %}
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                <li><a class="waves-effect" href="#">News</a></li>
+                <li><a class="waves-effect" href="#">Articles</a></li>
+                <li><a class="waves-effect" href="#">Reviews</a></li>
+                <li><a class="waves-effect" href="#">Videos & Media</a></li>
+                </ul>
+            </div>
+        
+            <ul id="main-nav" class="hide-on-med-and-down">
+                <li><a class="waves-effect waves-custom" href="#">News</a></li>
+                <li><a class="waves-effect waves-custom" href="#">Articles</a></li>
+                <li><a class="waves-effect waves-custom" href="#">Reviews</a></li>
+                <li><a class="waves-effect waves-custom" href="#">Videos & Media</a></li>
+            </ul>
+        </div>
+    </nav>
+
+</div>

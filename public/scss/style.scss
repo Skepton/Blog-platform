@@ -1,0 +1,12 @@
+@charset "UTF-8";
+@import "compass";
+// import materialize
+@import "materialize",
+        "components/article",
+        "components/admin",
+        "components/menu",
+        "components/post-center",
+        "components/post-list",
+        "components/sidebar",
+        "components/front-page",
+        "components/composer";

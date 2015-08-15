@@ -1,0 +1,88 @@
+#content-wrapper {
+    position: relative;
+}
+
+#write {
+    position: fixed;
+    z-index: 100;
+    top: $navbar-height;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    
+    form {
+        padding: 1.5rem 0.75rem;
+        
+        button[type="submit"] {
+            &:before {
+                content: "";
+                height: 100%;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .preloader-wrapper {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+#preview {
+    
+    article {
+        
+        .article-header {
+            
+            .dz-message {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                opacity: 0.25;
+                height: 100%;
+                width: 100%;
+                margin: 0 auto;
+                cursor: pointer;
+                background-color: rgba(255,255,255, 0.5);
+                @include transition(opacity 0.25s ease);
+                @include transform(translateY(-50%));
+                
+                p {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin: 0;
+                    color: white;
+                    font-size: 2rem;
+                    font-weight: bold;
+                    line-height: 2rem;
+                    @include transform(translate(-50%, -50%));
+                    @include transition(color 0.25s ease);
+                    i {
+                        font-size: 2rem;
+                        vertical-align: top;
+                    }
+                }
+                
+            }
+            
+            &:hover {
+                .dz-message {
+                    opacity: 1;
+                    p {
+                        color: white;
+                    }
+                    
+                }
+            }
+            
+            &.opload {
+                .dz-message {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

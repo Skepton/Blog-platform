@@ -1,0 +1,347 @@
+.article {
+    min-height: 100vh;
+    padding-bottom: 4rem;
+    .navbar-fixed {
+        #nav {
+            top: 0;
+            background-color: transparent;
+            box-shadow: none;
+            .nav-wrapper {
+                @extend .z-depth-1;
+            }
+        }
+    }
+    .article-header {
+        position: relative;
+        margin-top: -$navbar-height;
+        min-height: 50rem;
+        background-color: #555;
+        overflow: hidden;
+        background-image: url(../images/bg_2.png);
+
+        @media #{$xlarge-and-up}{
+            width: 100%;
+            left: 50%;
+            @include transform(translateX(-50%));
+        }
+        .header-bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.35;
+            @include background-image(linear-gradient(to bottom right, color("blue","lighten-2"), color("red","lighten-2")));
+             @include transform(translateZ(0));
+        }
+        .header-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            mix-blend-mode: multiply;
+            @include filter(grayscale(20%));
+            @include background-size(cover);
+            background-position: center;
+             @include transform(translateZ(0));
+        }
+        img {
+            position: absolute;
+            left: 50%;
+            opacity: 0.9;
+            mix-blend-mode: overlay;
+            @include filter(grayscale(20%));
+            @include transform(translate(-50%, -50%));
+            &.responsive {
+                height: 100%;
+                width: auto;
+                max-width: none;
+            }
+        }
+        .header-info-wrapper {
+            position: relative;
+            max-width: $max-width;
+            height: 100%;
+            margin: $navbar-height auto 100px auto;
+            padding-top: 20rem;
+            padding-bottom: 5rem;
+            pointer-events: none;
+            &:before {
+                content: " ";
+                height: 100%;
+                display: inline-block;
+            }
+            .header-info {
+                display: inline-block;
+                vertical-align: bottom;
+                pointer-events: all;
+                .headline {
+                    display: inline-block;
+                    margin: 3rem 0 0 0;
+                    padding: 0 15%;
+                    width: 100%;
+                    color: white;
+                    font-size: 4rem;
+                    font-weight: 400;
+                    letter-spacing: 1px;
+                }
+                .article-stats {
+                    display: inline-block;
+                    width: 70%;
+                    padding: 0 15%;
+                    vertical-align: middle;
+                    color: white;
+                    a:hover {
+                        color: $link-hover-color;
+                    }
+                    span {
+                        padding: 0 0.5rem;
+                        margin: 0 0.5rem;
+                        font-weight: 200;
+                        font-size: 1.1rem;
+                        letter-spacing: 1px;
+                        &.author {
+                            padding: 0 1rem 0 0;
+                            margin: 0;
+                            border-right: 1px solid #fff;
+                        }
+                        i {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: 0.5rem;
+                            margin-top: -2px;
+                            font-size: 1.1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #content-wrapper {
+        position: relative;
+        background-color: transparent;
+        margin-top: -10rem;
+        .article-body {
+            position: relative;
+            max-width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            
+            .post-content {
+                position: relative;
+                padding: 2rem 15%;
+                font-size: 1.4rem;
+                font-weight: 300;
+                color: #555;
+                p:first-of-type {
+                    font-weight: 700;
+                }
+                div[class^="placeholder-"] {
+                    position: relative;
+                    height: 400px;
+                    width: 100%;
+                    background-color: #f0f0f0;
+                    cursor: pointer;
+                    .dz-message {
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        opacity: 0.25;
+                        height: 100%;
+                        width: 100%;
+                        margin: 0 auto;
+                        cursor: pointer;
+                        background-color: rgba(255,255,255, 0.5);
+                        @include transition(opacity 0.25s ease);
+                        @include transform(translateY(-50%));
+                        p {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin: 0;
+                            color: #aaaaaa;
+                            font-size: 2rem;
+                            font-weight: 400;
+                            line-height: 2rem;
+                            @include transform(translate(-50%, -50%));
+                            @include transition(color 0.25s ease);
+                            i {
+                                font-size: 2rem;
+                                vertical-align: top;
+                            }
+                        }
+                    }
+                    &.hasImage {
+                        height: auto;
+                        .dz-message {
+                            opacity: 0;
+                            @include transition(opacity 0.3s ease);
+                        }
+                        &:hover {
+                            .dz-message {
+                                opacity: 1;
+                                color: #666;
+                            }
+                            img {
+                                opacity: 0.5;
+                                @include transition(opacity 0.3s ease);
+                            }
+                        }
+                    }
+                }
+                .material-placeholder {
+                    img {
+                        max-width: none;
+                    }
+                }
+            }
+            .comment-wrapper {
+                position: relative;
+                padding: 2rem 15%;
+                background-color: #333;
+                color: #e0e0e0;
+                &:before {
+                    content: " ";
+                    position: absolute;
+                    z-index: 0;
+                    left: 7.5%;
+                    top: 0rem;
+                    bottom: 3rem;
+                    width: 0.4rem;
+                    background-color: rgba(255,255,255,0.1);
+                }
+                h3 {
+                    position: relative;
+                    display: table;
+                    padding: 0.5rem 0 0.5rem 10%;
+                    margin: 1.25rem -10.75%;
+                    border-left: 0.4rem solid $link-hover-color;
+                    font-size: 1.75rem;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                }
+                .comment-loop {
+                    article {
+                        position: relative;
+                        display: table;
+                        width: 100%;
+                        margin: 0.75rem 0;
+                        padding: 0 1.5rem;
+                        background-color: transparent;
+                        cursor: default !important;
+                        @include transition(background-color 0.5s ease-in);
+                        @include transition-delay(0.25s);
+                        &.selected {
+                            @extend .waves-light;
+                            background-color: #404040;
+                        }
+                        .info {
+                            position: relative;
+                            z-index: 10;
+                            font-size: 1.1rem;
+                            letter-spacing: 1px;
+                            .author {
+                                font-weight: 600;
+                            }
+                            .date {
+                                font-weight: 300;
+                                color: #aaa;
+                            }
+                            .reply {
+                                float: right;
+                                margin-top: -0.35rem;
+                                font-weight: 600;
+                                color: $link-hover-color;
+                                background-color: transparent;
+                            }
+                        }
+                        @for $i from 2 through 10 {
+                            &.level_#{$i} {
+                                padding-left: #{2.5*$i}rem;
+                                &:before {
+                                    position: absolute;
+                                    top: 0.75rem;
+                                    content: " ";
+                                    height: 2rem;
+                                    margin-left: -1.5rem;
+                                    border-left: 0.2rem solid #e0e0e0;
+                                }
+                            }
+                        }
+                        .comment-content {
+                            position: relative;
+                            z-index: 10;
+                            font-size: 1.1rem;
+                            font-weight: 300;
+                            color: #888;
+                        }
+                    }
+                }
+                .post-div {
+                    margin-top: 2rem;
+                    padding-top: 1rem;
+                    border-top: 1px solid #e0e0e0;
+                    button {
+                        float: right;
+                        font-weight: 600;
+                        color: $link-hover-color;
+                        background-color: transparent;
+                        border: 1px solid $link-hover-color;
+                    }
+                    form {
+                        background-color: transparent;
+                    }
+                    #reply-to {
+                        display: none;
+                        margin: 0;
+                        position: absolute;
+                        z-index: 100;
+                        margin-top: -1rem;
+                        color: #aaa;
+                        font-weight: 300;
+                        &.relevant {
+                            display: block;
+                            .clearSubject {
+                                display: inline-block;
+                                vertical-align: middle;
+                                cursor: pointer;
+                                i {
+                                    font-size: 1.25rem;
+                                    display: inline-block;
+                                    vertical-align: top;
+                                    color: $link-hover-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            & > div {
+                position: relative;
+                //z-index: 10;
+            }
+            &:before {
+                content: " ";
+                position: absolute;
+                z-index: 0;
+                left: 7.5%;
+                top: 3rem;
+                bottom: 3rem;
+                width: 0.4rem;
+                background-color: #f8f8f8;
+            }
+        }
+    }
+}
+.admin {
+    .article {
+        min-height: 0;
+        .article-body {
+            margin-top: 400px;
+        }
+    }
+}

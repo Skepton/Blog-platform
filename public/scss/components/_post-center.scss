@@ -1,0 +1,109 @@
+#content-wrapper {
+    position: relative;
+}
+
+#post-list {
+    position: fixed;
+    z-index: 100;
+    top: $navbar-height;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    padding-top: 5rem;
+    .menu-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 0.75rem;
+    }
+    .notice {
+        padding: 0.75rem;
+        color: #666;
+        font-style: italic;
+        background-color: #f0f0f0;
+    }
+    .collection {
+        .collection-item {
+            position: relative;
+            min-height: 88px;
+            padding: 0.75rem;
+            cursor: pointer;
+            &.selected {
+                border-left: 3px solid $secondary-color;
+                background-color: #f8f8f8;
+            }
+            .action-bar {
+                position: absolute;
+                right: 3rem;
+                top: 0.5rem;
+                opacity: 0;
+                @include transition((opacity 0.25s ease, right 0.25s ease));
+                a {
+                    padding: 0 0.5rem;
+                    margin-left: 0.25rem;
+                    &:hover {
+                        background-color: $secondary-color;
+                        color: white;
+                    }
+                    &.remove:hover {
+                        background-color: $error-color;
+                    }
+                }
+            }
+            .headline {
+                margin: 0.25rem 0;
+                padding-right: 4.5rem;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+            .body {
+                margin: 1rem 0 0 0;
+                padding-right: 6rem;
+                color: #aaa;
+            }
+            .info-bar {
+                position: absolute;
+                right: 0rem;
+                bottom: 0.5rem;
+                .author, .time {
+                    display: inline-block;
+                    margin: 0 0 0 0.25rem;
+                    padding: 0 0.5rem;
+                    background-color: transparent;
+                    i {
+                        vertical-align: middle;
+                        color: #aaa;
+                    }
+                }
+            }
+            &:hover {
+                .action-bar {
+                    opacity: 1;
+                    right: 0;
+                }
+            }
+            .preloader-wrapper {
+                position: absolute;
+                z-index: 1000;
+                opacity: 1;
+                right: 0rem;
+                top: 50%;
+                margin-top: -24px;
+                visibility: hidden;
+                @include border-radius(50%);
+                @include transform(translateX(50%));
+                @include transition((transform 0.25s ease, opacity 0.25s ease));
+                &.active {
+                    opacity: 1;
+                    visibility: visible;
+                    @include transform(translateX(125%));
+                }
+            }
+        }
+    }
+}
+
+#preview {
+
+}
