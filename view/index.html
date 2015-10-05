@@ -20,8 +20,7 @@
 			<div class="post-list-wrapper col m9 collection">
 				{% include "partials/post-list.html" %}
 			</div>
-			<div class="sidebar col m3">
-				{% include "partials/sidebar-articles.html" %}
+			<div id="sidebar" class="col m3">
 			</div>
 		</div>
 		
@@ -29,7 +28,13 @@
 		<script type='text/javascript' src='/js/materialize.min.js'></script>
 		<script type='text/javascript' src='/js/init.js'></script>
 		<script type='text/javascript' src='/js/swig.min.js'></script>
+		<script type='text/javascript' src='/js/route.min.js'></script>
 		<script type='text/javascript' src='/js/blog.js'></script>
+		{% if !active %}
+			<img class="pixel-tracker" src="/pixel/pageview/index"/>
+		{% else %}
+			<img class="pixel-tracker" src="/pixel/pageview/{{active}}"/>
+		{% endif %}
 	</body>
 
 </html>

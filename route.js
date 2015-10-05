@@ -5,9 +5,11 @@ var sqlite3 = require('sqlite3'),
     bcrypt = require('bcrypt'),
     moment = require('moment'),
     crypto = require('crypto'),
-    headerCrunch = require('./modules/headerCrunch').mainCrunch,
+    headerCrunch = require('./modules/headerCrunch').articleCrunch,
+    profileCrunch = require('./modules/headerCrunch').profileCrunch,
     urlSlug = require('./modules/slug').urlSlug,
     markdown = require('./modules/server_markdown').parse,
+    dbApi = require('./modules/dbApi'),
     app = require('./server.js').app;
     
     var passport = require('./modules/login_procedure').passport,
@@ -19,67 +21,79 @@ var sqlite3 = require('sqlite3'),
 //db.run('DROP TABLE Posts');
 //db.run('DROP TABLE Users');
 //db.run('DROP TABLE Comments');
-//db.run('UPDATE Users SET displayname="Skepton" WHERE username = "skepton"');
+//db.run('DROP TABLE Categories');
+//db.run('DROP TABLE hasCategory');
+//db.run('DROP TABLE Tracking');
+//db.run('INSERT INTO Categories (title, slug) VALUES( "Media","media")');
 
-/*db.each('SELECT * FROM Comments', function(err,row){
+db.each('SELECT * FROM Tracking', function(err, row){
     console.log(row);
-});*/
+});
+
+//db.run('UPDATE Users SET admin = 1 WHERE username = "skepton"');
 
 /* BASE */
 
 app.get('/', function(req, res) {
-    var parsedPosts = [];
-    Knex.raw('SELECT Posts.*, User.displayname FROM Posts JOIN Users as User ON user.id = Posts.author ORDER BY Posts.updated_at desc LIMIT 10').then(function(rows){
-        rows.forEach(function(row){
-            var date = new moment(row.updated_at).fromNow();
-            var parsedPost = markdown(row.headline, row.body, 1, row.header);
-            parsedPost.author = row.displayname;
-            parsedPost.date = date;
-            parsedPost.slug = row.slug;
-            parsedPost.hashid = row.hashid;
-            parsedPosts.push(parsedPost);
-        });
-        
+    
+    dbApi.getArticles(null, function(parsedPosts){
         res.render('index', {user: req.user, articles: parsedPosts});
     });
+
 });
 
-app.get('/article/:post', function(req, res) {
-    var article = req.params.post;
-    var parsedPosts = [];
-    Knex.raw('SELECT Posts.*, User.displayname FROM Posts JOIN Users as User ON user.id = Posts.author WHERE Posts.slug = ? OR Posts.hashid = ? ORDER BY Posts.updated_at desc LIMIT 1', [article, article]).then(function(rows){
-        var row = rows[0];
+app.get('/category/:category', function(req, res){
+    
+    var category = req.params.category;
+    
+    dbApi.getArticles(category, function(parsedPosts){
+        if (parsedPosts){
+            res.render('index', {user: req.user, articles: parsedPosts, active: category});
+        }else {
+            res.redirect('/');
+        }
+    });
+    
+});
 
-        var date = new moment(row.updated_at).fromNow();
-        var parsedPost = markdown(row.headline, row.body, 0, row.header);
-        parsedPost.author = row.displayname;
-        parsedPost.date = date;
-        parsedPost.header = row.header;
-        parsedPost.slug = row.slug;
-        parsedPost.hashid = row.hashid;
-        parsedPosts.push(parsedPost);
-        
-        res.render('article', {user: req.user, articles: parsedPosts});
+app.get('/article/:article', function(req, res) {
+    var article = req.params.article;
+    dbApi.getArticle(article, function(parsedPosts){
+        if (parsedPosts){
+            res.render('article', {user: req.user, articles: parsedPosts});
+        } else {
+            res.redirect('/');
+        }
     });
 });
 
 app.get('/loadComments/:article', function(req, res) {
     
     var article = req.params.article;
-
-	Knex.select('Comments.hashid','comment','thread', 'user', 'date','Users.displayname','Comments.created_at')
-	.from('Comments')
-	.join('Users', 'Comments.user', 'Users.id')
-	.where('article', article)
-	.orderBy('Comments.thread', 'asc')
-	.then(function(rows){
-	    rows.forEach(function(row){
-	        row.date = new moment(row.created_at).fromNow();
-	        row.threadLevel = row.thread.split('_').length;
-	    });
-	    res.render('partials/comment', {comments: rows, article: article});
-	});
+    
+    if (article != 'latest') {
+        
+        dbApi.getComments(article, function(parsedPosts, article){
+    	    res.render('partials/comment', {comments: parsedPosts, article: article});
+        });
+        
+    } else {
+        
+        dbApi.getComments(article, function(parsedPosts){
+    	    res.render('partials/sidebar-comments', {comments: parsedPosts});
+        });
+        
+    }
 	
+	
+});
+
+app.get('/user/settings', function(req, res){
+    
+    if (req.user){
+        res.render('user-settings', {user: req.user});
+    }
+
 });
 
 app.get('/login', function(req, res) {
@@ -113,8 +127,6 @@ app.post('/postComments/:article', function(req, res) {
         
         Knex.raw(' SELECT (SELECT Comments.thread FROM Comments WHERE Comments.hashid = ? AND article = ?) AS thread, (SELECT COUNT(id) AS replies FROM Comments WHERE Comments.parent = ? AND article = ?) AS Replies ', [parent, article, parent, article])
 		.then(function(row){
-		    
-		    console.log(row);
             
             row[0].Replies = row[0].Replies + 1;
             
@@ -162,6 +174,7 @@ app.post('/postComments/:article', function(req, res) {
 				.update({hashid: crypto.createHash('sha1').update(created[0].toString()).digest('hex')}).then(function(){
 
 					res.send('done');
+					dbApi.track('comment',article);
 					
 				})
 				.catch(function(error){
@@ -173,7 +186,63 @@ app.post('/postComments/:article', function(req, res) {
     }
 });
 
-/* ADMIN */
+/* User Post */
+
+app.post('/user/settings/picture-upload', multipartMiddleware, function(req, res) {
+    
+    var filename = crypto.createHash('MD5').update(req.user.id.toString()).digest('hex');
+    var uploadedFile = req.files.file.path;
+    
+    if( req.user){
+        
+        fs.readFile(uploadedFile, function (err, data) {
+            
+            var newFilename = 'images/user-cache/' + filename + '_profile.jpg';
+
+            var newPath = __dirname + "/public/" + newFilename;
+            
+            fs.writeFile(newPath, data, function (err) {
+                
+                fs.unlink(uploadedFile, function() {
+                    if (err) throw err;
+                });
+                
+                profileCrunch(newPath, function(done){
+                    
+                    if(done){
+                        res.send(newFilename);
+                    }else {
+                        res.send(false);
+                    }
+                    
+                });
+                
+            });
+            
+        });
+        
+    }
+    
+});
+
+app.post('/user/settings/save', multipartMiddleware, function(req, res) {
+    
+    var about = req.body.about, picture = req.body.picture;
+    
+    if (req.user){
+        Knex('Users')
+        .where('id',req.user.id)
+        .returning('id')
+        .update({
+            about: about,
+            picture: picture
+        }).then(function(updated){
+            res.send('OK');
+        });
+    }
+});
+
+/* Admin */
 
 app.get('/admin', function(req, res) {
     
@@ -183,7 +252,7 @@ app.get('/admin', function(req, res) {
             rows.forEach(function(row){
                 row['date'] = new moment(row.updated_at).fromNow();
             });
-            res.render('admin/index', {articles: rows, user: req.user});
+            res.render('admin/index', {articles: rows, user: req.user, active: 'articleCenter'});
         });
         
     }else {
@@ -254,13 +323,21 @@ app.get('/admin/composer/edit/:post', function(req, res) {
         
         Knex('Posts')
         .select()
+        .leftJoin('hasCategory','Posts.hashid','hasCategory.article')
         .where('hashid', post).then(function(row){
+
+            var article = row[0];
             
             if(!row){
                 res.redirect('/admin');
             }
             
-            res.render('admin/composer', {post: row[0], user: req.user});
+            Knex('Categories')
+            .select('*').then(function(rows){
+            
+                res.render('admin/composer', {post: article, user: req.user, categories: rows, active: 'articleCenter'});
+            
+            });
             
         });
 	    
@@ -293,24 +370,38 @@ app.get('/admin/composer/delete/:post', function(req, res) {
 
 /* Admin Post */
 
-app.post('/admin/composer/save/:post', function(req, res) {
+app.post('/admin/composer/save/:article', function(req, res) {
     
     if( req.user && req.user.admin === 1){
     
-        var post = req.params.post, headline = req.body.headline, body = req.body.body, header = req.body.header;
+        var article = req.params.article, headline = req.body.headline, body = req.body.body, header = req.body.header, category = req.body.category;
         
         Knex('Posts')
-        .where('hashid',post)
+        .where('hashid',article)
+        .returning('id')
         .update({
             headline: headline,
             body: body,
             header: header
-        }).then(function(){
+        }).then(function(updated){
+            Knex('Posts')
+            .select('id')
+            .where('hashid', article).then(function(row){
+                
+                Knex('hasCategory')
+                .insert({'category': category, 'article': article}).then(function(row){
 
+                }).catch(function(error){
+                    Knex('hasCategory')
+                    .update('category', category)
+                    .where('article', article);
+                });
+            });
+            
             if(headline != '' && headline.length > 0){
                 
                 Knex('Posts')
-                .where('hashid',post)
+                .where('hashid',article)
                 .update({
                     slug: urlSlug(headline)
                 }).then(function(){
@@ -412,10 +503,12 @@ app.post('/register', function(req, res) {
         		passport.authenticate('local')(req, res, function () {
         
         			res.redirect('/');
+        			dbApi.track('register','success');
         		});
         		
         	}).catch(function(error) {
-        		res.redirect('/login');
+        		res.redirect('/register');
+        		dbApi.track('register','error');
         	});
     	    
     	});
@@ -426,10 +519,23 @@ app.post('/register', function(req, res) {
 
 app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
 
-    if(req.user.admin === 1){
+    if (req.user.admin === 1){
 	    res.redirect('/admin');
+	    dbApi.track('login','success');
     }else {
         res.redirect('/');
+        dbApi.track('login','success');
     }
 
+});
+
+/* Tracking */
+app.get('/pixel/:event/:data', function(req, res){
+    
+    var event = req.params.event, data = req.params.data;
+
+    dbApi.track(event,data);
+    
+    res.redirect('/images/pixel.gif');
+    
 });

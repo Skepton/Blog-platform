@@ -2,11 +2,14 @@
 @import "compass";
 // import materialize
 @import "materialize",
+        "components/header-colors",
         "components/article",
         "components/admin",
         "components/menu",
+        "components/global",
         "components/post-center",
         "components/post-list",
         "components/sidebar",
+        "components/user",
         "components/front-page",
         "components/composer";

@@ -1,11 +1,19 @@
-.sidebar.sidebar {
+#sidebar {
     float: none;
     display: table-cell;
     vertical-align: top;
     padding: 1rem 1.5rem;
-    background-color: $sidebar-bg-color;
+    background-color: #333;
     color: white;
-    .collection {
+    h3 {
+        font-weight: 400;
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+        margin: 0;
+        color: #aaa;
+        text-transform: uppercase;
+    }
+    .collection.articles, .collection.comments {
         border: none;
         .collection-item {
             padding: 1.5rem 0;
@@ -39,7 +47,7 @@
                 }
                 p {
                     margin: 0.25rem 0;
-                    font-size: 0.9rem;
+                    font-size: 0.95rem;
                     font-weight: 300;
                     letter-spacing: 1px;
                     color: rgba(255,255,255,0.75);
@@ -47,14 +55,15 @@
             }
             .post-info {
                 font-size: 0.9rem;
-                font-weight: 200;
+                font-weight: 300;
                 color: #e0e0e0;
                 vertical-align: middle;
                 margin: 0.5rem 0 -0.5rem 0;
                 i {
-                    font-size: 0.95rem;
+                    font-size: 1.25rem;
                     vertical-align: middle;
                     margin-right: 0.25rem;
+                    margin-top: -0.2rem;
                     color: #aaa;
                 }
                 span:last-of-type {
@@ -62,6 +71,44 @@
                     &:before {
                         content: "|";
                         margin-right: 1rem;
+                    }
+                }
+            }
+        }
+        &.comments {
+            .collection-item {
+                padding: 0.5rem 0;
+                .post-info {
+                    margin-bottom: 0.25rem;
+                    p {
+                        margin: 0;
+                    }
+                    .author, .author i {
+                        color: $link-hover-color;
+                    }
+                    span:last-of-type {
+                        margin-left: 0;
+                        &:before {
+                            display: none;
+                        }
+                    }
+                }
+                .excerpt {
+                    max-height: 5.25rem;
+                    margin-bottom: 0.75rem;
+                    &:after {
+                        display: none;
+                    }
+                }
+                .headline {
+                    font-size: 0.9rem;
+                    font-weight: 300;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: $link-hover-color;
+                    span {
+                        color: #aaa;
                     }
                 }
             }

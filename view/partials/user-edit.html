@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col m8 offset-m2">
+	    <div class="col m4">
+	        <div id="profile-dropzone" {% if user.picture %}class="hasPicture"{% endif %}>
+	            <div class="dz-default dz-message"><span><p class="valign"><i class="material-icons">add</i> Click to upload header image</p></span></div>
+	            {% if user.picture %}
+	            	<img src="/{{user.picture}}" />
+	            {% endif %}
+	        </div>
+	    </div>
+		
+		<div class="col m8">
+		
+			<form action="/user/settings/save" method="POST">
+				
+				<input id="picture" type="hidden" name="picture" value="{{user.picture}}"/>
+	
+				<div class="input-field s12">
+					<textarea id="about" name="about" class="materialize-textarea" length="350" maxlength="350" required>{{user.about}}</textarea>
+					<label for="about">About</label>
+				</div>
+	
+				<button class="right btn waves-effect waves-light tooltipped" type="submit" value="Save" data-position="bottom" data-delay="25" data-tooltip="Save">
+					<i class="material-icons">backup</i>
+					<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+				</button>
+	
+			</form>
+			
+		</div>
+	</div>
+
+</div>

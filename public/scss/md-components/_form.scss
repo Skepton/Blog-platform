@@ -242,9 +242,11 @@ textarea {
 /* Remove default Radio Buttons */
 [type="radio"]:not(:checked),
 [type="radio"]:checked {
-  position: absolute;
-  left: -9999px;
-  visibility: hidden;
+  //position: absolute;
+  //left: -9999px;
+  //visibility: hidden;
+  opacity: 0;
+  margin-right: -14px;
 }
 
 [type="radio"]:not(:checked) + label,

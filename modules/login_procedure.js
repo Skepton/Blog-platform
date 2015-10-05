@@ -31,7 +31,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 		
 		if(!compareHash(password, row.password)) return done(null, false);
 
-		db.get('SELECT username, displayname, id, admin FROM Users WHERE username = ?', username, function(err, row) {
+		db.get('SELECT username, displayname, id, admin, picture, about FROM Users WHERE username = ?', username, function(err, row) {
 	
 			if (!row) return done(null, false);
 			return done(null, row);
@@ -48,7 +48,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
 
-	db.get('SELECT id, username, displayname, admin FROM Users WHERE id = ?', id, function(err, row) {
+	db.get('SELECT username, displayname, id, admin, picture, about FROM Users WHERE id = ?', id, function(err, row) {
 
 		if (!row) return done(null, false);
 		return done(null, row);

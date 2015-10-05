@@ -5,7 +5,7 @@
 		<div class="header-content parallax">
 			<img class="article-parallax-image" src="/{{article.header}}" / >
 		</div>
-		<div class="header-bg-gradient"></div>
+		<div class="header-bg-gradient header-color-{{ article.id%4 }}"></div>
 		<div class="header-info-wrapper">
 			<div class="header-info">
 				<h2 class="headline">{{article.headline}}</h2>
@@ -18,6 +18,7 @@
 		
 		<div class="article-body z-depth-1">
 			<div class="post-content bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
+			{% include "./article-footer.html" %}
 			<div class="comment-wrapper">
 				<h3>Article Comments</h3>
 				<div id="comment-content"></div>

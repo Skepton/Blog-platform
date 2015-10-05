@@ -112,11 +112,8 @@ $(document).on('ready', function(){
 		},250);
 	});
 	
-	$('#headline, #body').trigger('keyup');
-	
 	$('#write form').on('submit', function(e){
 		
-		e.preventDefault();
 		var url = $(this).attr('action');
 		
 		$('button[type="submit"]').find('i').addClass('hide');
@@ -132,7 +129,7 @@ $(document).on('ready', function(){
 				
 					setTimeout(function(){
 						
-						Materialize.toast('Your Comment was posted!', 4000);
+						Materialize.toast('Your Article was posted!', 4000);
 					
 						$('button[type="submit"]').find('i').removeClass('hide');
 						$('button[type="submit"]').find('.preloader-wrapper').removeClass('active').addClass('hide')
@@ -141,12 +138,15 @@ $(document).on('ready', function(){
 				
 				}else {
 					
-					Materialize.toast('<span class="red-text">Your Comment was NOT posted!</span>', 4000);
+					Materialize.toast('<span class="red-text">Your Article was NOT posted!</span>', 4000);
 					
 				}
 				
 			},
 		});
+		
+		return false;
+		
 	});
 	
 	$('#post-list .collection-item').on('click', function(){
@@ -156,7 +156,6 @@ $(document).on('ready', function(){
 		$.ajax('/admin/getPreview/'+article, {
 			success: function(response){
 				setTimeout(function(){
-					console.log(response);
 					articlePreviewParse(response);
 					preloader.removeClass('active');
 				}, 300);
@@ -166,11 +165,14 @@ $(document).on('ready', function(){
 	
 	$('#post-list .collection-item').first().trigger('click');
 	
+	setTimeout(function(){
+		$('#headline, #body').trigger('keyup');
+	},500);
+	
 });
 
 $(window).on('resize', function(){
 	
-	//$('#content-wrapper').height($(window).innerHeight()-$('#nav').height()-4*15);
 	$('#preview').css('padding-left', $('#post-list, #write').outerWidth());
 	
 });

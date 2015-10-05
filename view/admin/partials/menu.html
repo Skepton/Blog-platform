@@ -18,18 +18,14 @@
                     {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                <li><a class="waves-effect" href="#">News</a></li>
-                <li><a class="waves-effect" href="#">Articles</a></li>
-                <li><a class="waves-effect" href="#">Reviews</a></li>
-                <li><a class="waves-effect" href="#">Videos & Media</a></li>
+                <li><a class="waves-effect" href="#">Article Center</a></li>
+                <li><a class="waves-effect" href="#">Stats</a></li>
                 </ul>
             </div>
         
             <ul id="main-nav" class="hide-on-med-and-down">
-                <li><a class="waves-effect waves-custom" href="#">News</a></li>
-                <li><a class="waves-effect waves-custom" href="#">Articles</a></li>
-                <li><a class="waves-effect waves-custom" href="#">Reviews</a></li>
-                <li><a class="waves-effect waves-custom" href="#">Videos & Media</a></li>
+                <li {% if active == "articleCenter" %}class="active"{% endif %}><a class="waves-effect" href="#">Article Center</a></li>
+                <li {% if active == "stats" %}class="active"{% endif %}><a class="waves-effect" href="#">Stats</a></li>
             </ul>
         </div>
     </nav>

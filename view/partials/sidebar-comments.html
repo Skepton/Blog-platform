@@ -1,0 +1,16 @@
+<div class="sidebar-content collection comments">
+    <h3>Latest Comments</h3>
+    {% for comment in comments %}
+    
+        <article class="collection-item">
+            
+            <div class="post-info">
+                <p><span class="author"><i class="material-icons">person</i>{{comment.displayname}}</span> Said:</p>
+            </div>
+            <div class="excerpt bread-text"><p>{% autoescape false %}{{comment.comment}}{% endautoescape %}</p></div>
+            <h5 class="headline"><span>In article: </span><a href="/article/{{comment.slug}}">{{comment.headline}}</a></h5>
+            
+        </article>
+    
+    {% endfor %}
+</div>
