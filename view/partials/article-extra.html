@@ -1,0 +1,9 @@
+<div class="article-extra">
+    <a class="source" href="{{article.source}}">Source</a>
+    <div class="tags-container">
+        <p>Tags:</p>
+        {% for tag in article.tags %}
+            <a href="/tags/{{article.tagsUrl[loop.index-1]}}">{{tag}}</a>
+        {% endfor %}
+    </div>
+</div>

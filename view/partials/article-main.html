@@ -1,7 +1,7 @@
 {% for article in articles %}
 
-	<div class="article-header parallax-container z-depth-1">
-		
+	<div class="article-header parallax-container">
+
 		<div class="header-content parallax">
 			<img class="article-parallax-image" src="/{{article.header}}" / >
 		</div>
@@ -13,20 +13,25 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="content-wrapper" class="row">
-		
-		<div class="article-body z-depth-1">
-			<div class="post-content bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
+
+		<div class="article-body">
+			<div class="post-content bread-text">
+				{% autoescape false %}
+					{{article.body}}
+				{% endautoescape %}
+			</div>
+			{% include "./article-extra.html" %}
 			{% include "./article-footer.html" %}
 			<div class="comment-wrapper">
 				<h3>Article Comments</h3>
 				<div id="comment-content"></div>
 			</div>
 		</div>
-		
+
 		<script type="text/javascript"> var articleId = "{{article.hashid}}"; </script>
-		
+
 	</div>
 
 {% endfor %}

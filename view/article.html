@@ -4,26 +4,27 @@
 
 	<head>
 
-		<title>Article | {{article.headline}}</title>
+		<title>Article | {{articles[0].headline}}</title>
 		<link rel="stylesheet" href="/css/style.css" media="screen,projection">
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Sans+Pro:300,300i,400,400i,600,700">
 		<meta name="viewport" content="width=device-width initial-scale=1" user-scalable="no">
-	
+
 	</head>
-	
+
 	<body class="article">
-		
+
 		{% include "partials/menu.html" %}
-		
-		{% include "partials/article-main.html" %}
-		
+		<div id="page-wrapper">
+			{% include "partials/article-main.html" %}
+		</div>
+
 	    <script type="text/javascript" src="/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/materialize.min.js"></script>
+		<script type="text/javascript" src="/js/materialize.js"></script>
 		<script type="text/javascript" src="/js/init.js"></script>
 		<script type='text/javascript' src='/js/route.min.js'></script>
 		<script type="text/javascript" src="/js/blog.js"></script>
-		<img class="pixel-tracker" src="/pixel/pageview/{{articles[0].slug}}"/>
+		<script type='text/javascript'>var sessionID = '{{sessionID}}'; </script>
 	</body>
 
 </html>

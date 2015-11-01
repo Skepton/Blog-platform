@@ -1,8 +1,8 @@
 <div class="navbar-fixed">
-    
+
     <nav id="nav">
         <div class="nav-wrapper">
-        
+
             <div id="top-line">
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <a href="/" class="brand-logo">Blogging</a>
@@ -18,18 +18,46 @@
                     {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                <li><a class="waves-effect" href="/">News</a></li>
-                <li><a class="waves-effect" href="/category/articles">Articles</a></li>
-                <li><a class="waves-effect" href="/category/reviews">Reviews</a></li>
-                <li><a class="waves-effect" href="/category/media">Videos & Media</a></li>
+                    <li {% if !active %}class="active"{% endif %}><a class="waves-effect" href="/">All</a>
+                        <ul>
+                            <li><a class="waves-effect" href="/all/news">News</a></li>
+                            <li><a class="waves-effect" href="/all/articles">Articles</a></li>
+                            <li><a class="waves-effect" href="/all/reviews">Reviews</a></li>
+                            <li><a class="waves-effect" href="/all/media">Videos & Media</a></li>
+                        </ul>
+                    </li>
+                    {% for item in menu %}
+                        <li {% if active == item.slug %}class="active"{% endif %}><a class="waves-effect" href="/c/{{item.slug}}">{{item.title}}</a>
+                            <ul>
+                                <li><a class="waves-effect" href="/{{item.slug}}/news">News</a></li>
+                                <li><a class="waves-effect" href="/{{item.slug}}/articles">Articles</a></li>
+                                <li><a class="waves-effect" href="/{{item.slug}}/reviews">Reviews</a></li>
+                                <li><a class="waves-effect" href="/{{item.slug}}/media">Videos & Media</a></li>
+                            </ul>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
-        
+
             <ul id="main-nav" class="hide-on-med-and-down">
-                <li {% if !active %}class="active"{% endif %}><a class="waves-effect" href="/">News</a></li>
-                <li {% if active == "articles" %}class="active"{% endif %}><a class="waves-effect" href="/category/articles">Articles</a></li>
-                <li {% if active == "reviews" %}class="active"{% endif %}><a class="waves-effect" href="/category/reviews">Reviews</a></li>
-                <li {% if active == "media" %}class="active"{% endif %}><a class="waves-effect" href="/category/media">Videos & Media</a></li>
+                <li {% if !active %}class="active"{% endif %}><a class="waves-effect ps-load" href="/">All</a>
+                    <ul>
+                        <li><a class="waves-effect ps-load" href="/c/all/news">News</a></li>
+                        <li><a class="waves-effect ps-load" href="/c/all/articles">Articles</a></li>
+                        <li><a class="waves-effect ps-load" href="/c/all/reviews">Reviews</a></li>
+                        <li><a class="waves-effect ps-load" href="/c/all/media">Videos & Media</a></li>
+                    </ul>
+                </li>
+                {% for item in menu %}
+                    <li {% if active == item.slug %}class="active"{% endif %}><a class="waves-effect ps-load" href="/c/{{item.slug}}">{{item.title}}</a>
+                        <ul>
+                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/news">News</a></li>
+                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/articles">Articles</a></li>
+                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/reviews">Reviews</a></li>
+                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/media">Videos & Media</a></li>
+                        </ul>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </nav>

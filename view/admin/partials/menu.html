@@ -1,8 +1,8 @@
 <div class="navbar-fixed">
-    
+
     <nav id="nav">
         <div class="nav-wrapper">
-        
+
             <div id="top-line">
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <a href="/" class="brand-logo">Blogging</a>
@@ -22,10 +22,10 @@
                 <li><a class="waves-effect" href="#">Stats</a></li>
                 </ul>
             </div>
-        
+
             <ul id="main-nav" class="hide-on-med-and-down">
-                <li {% if active == "articleCenter" %}class="active"{% endif %}><a class="waves-effect" href="#">Article Center</a></li>
-                <li {% if active == "stats" %}class="active"{% endif %}><a class="waves-effect" href="#">Stats</a></li>
+                <li {% if active == "articleCenter" %}class="active"{% endif %}><a class="waves-effect" href="/admin">Article Center</a></li>
+                <li {% if active == "stats" %}class="active"{% endif %}><a class="waves-effect" href="/admin/stats">Stats</a></li>
             </ul>
         </div>
     </nav>

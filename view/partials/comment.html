@@ -1,26 +1,19 @@
 {% if !comments.length == 0 %}
     <div class="comment-loop">
 	{% for comment in comments %}
-	
 		<article class="comment-container level_{{comment.threadLevel}} waves-effect" data-id="{{comment.hashid}}">
             <p class="info"><span class="author">{{comment.displayname}} </span><span class="date"> - {{comment.date}}</span><span class="reply btn-flat waves-light">Reply</span></p>
 			<p class="comment-content"><span class="commentCounter">{{comment.comment}}</span></p>
 		</article>
-	
 	{% endfor %}
 	</div>
 {% else %}
-
 <div id="no-comment-div">
-
 	<p class="no-comments">There are no comments on this article!</p>
-
 </div>
-
 {% endif %}
-
+{% if user.id %}
 <div class="post-div">
-
 	<form id="commentPostForm" action="/postComments/{{article}}" method="POST" class="row">
 		<input id="commentParent" type="hidden" name="parent" value="" />
 		<div class="input-field">
@@ -33,5 +26,5 @@
 			<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
 		</button>
 	</form>
-	
 </div>
+{% endif %}

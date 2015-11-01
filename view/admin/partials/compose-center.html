@@ -1,53 +1,82 @@
 <div class="row">
-	
+
 	<div id="write" class="z-depth-1 col m4">
-	
+
 		<form action="/admin/composer/save/{{post.hashid}}" method="POST">
-			
+
 			<input id="header" type="hidden" name="header" value="{{post.header}}"/>
 
-			<div class="input-field s12">
+			<div class="input-field">
 				<input id="headline" type="text" name="headline" value="{{post.headline}}" required>
 				<label for="headline">Headline</label>
 			</div>
 
-			<div class="input-field s12">
+			<div class="input-field">
 				<textarea id="body" name="body" class="materialize-textarea" required>{{post.body}}</textarea>
 				<label for="body">Article</label>
 			</div>
+			<div class="input-field col s12 m6">
+				<input id="source" type="text" name="source" value="{{post.source}}" required>
+				<label for="source">Source</label>
+			</div>
+			<div class="input-field col s12 m6">
+				<input id="tags" type="text" name="tags" value="{{post.tags}}" required>
+				<label for="tags">Tags</label>
+			</div>
+			<div class="input-field col s12 m6">
 			{% for category in categories %}
 			<p>
-				<input name="category" type="radio" id="test-{{category.slug}}" value="{{category.id}}" required {% if category.id === post.category %} checked="checked" {% endif %} />
-				<label for="test-{{category.slug}}">{{category.title}}</label>
+				<input name="category" type="radio" id="category-{{category.slug}}" value="{{category.id}}" required {% if category.id === post.category %} checked="checked" {% endif %} />
+				<label for="category-{{category.slug}}">{{category.title}}</label>
 		    </p>
 			{% endfor %}
+			</div>
+			<div class="input-field col s12 m6">
+				<p>
+					<input name="subcategory" type="radio" id="sub-news" value="news" required {% if post.subCategory === 'news' %} checked="checked" {% endif %} />
+					<label for="sub-news">News</label>
+				</p>
+				<p>
+					<input name="subcategory" type="radio" id="sub-article" value="articles" required {% if post.subCategory === 'articles' %} checked="checked" {% endif %} />
+					<label for="sub-article">Article</label>
+				</p>
+				<p>
+					<input name="subcategory" type="radio" id="sub-review" value="reviews" required {% if post.subCategory === 'reviews' %} checked="checked" {% endif %} />
+					<label for="sub-review">Review</label>
+				</p>
+				<p>
+					<input name="subcategory" type="radio" id="sub-media" value="media" required {% if post.subCategory === 'media' %} checked="checked" {% endif %} />
+					<label for="sub-media">Media</label>
+				</p>
+			</div>
+			<div class="actions">
+				<button class="right btn waves-effect waves-light tooltipped" type="submit" value="Save" data-position="bottom" data-delay="25" data-tooltip="Save">
+					<i class="material-icons">backup</i>
+					<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+				</button>
 
-			<button class="right btn waves-effect waves-light tooltipped" type="submit" value="Save" data-position="bottom" data-delay="25" data-tooltip="Save">
-				<i class="material-icons">backup</i>
-				<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
-			</button>
-			
-			<button class="right btn waves-effect waves-light orange tooltipped" type="publish" value="Publish" data-position="bottom" data-delay="25" data-tooltip="Publish">
-				<i class="material-icons">send</i>
-				<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
-			</button>
+				<button class="right btn waves-effect waves-light orange tooltipped" type="publish" value="Publish" data-position="bottom" data-delay="25" data-tooltip="Publish">
+					<i class="material-icons">send</i>
+					<div class="preloader-wrapper small hide"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+				</button>
+			</div>
 
 		</form>
-		
+
 	</div>
 
 </div>
 
 
 <div id="preview" class="article">
-		
+
 	<article></article>
-	
+
 </div>
 
 <div id="article-template" class="hide">
 	{% raw %}
-		<div class="article-header z-depth-1">
+		<div class="article-header">
 			<div id="header-dropzone" class="header-image upload valign-wrapper">
 				<div class="header-content" style="background-image: url(/{{article.header}});"></div>
 				<div class="header-bg-gradient"></div>
@@ -61,7 +90,7 @@
 			</div>
 		</div>
 		<div id="content-wrapper" class="row">
-			<div class="article-body z-depth-1">
+			<div class="article-body">
 				<div class="post-content bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
 			</div>
 		</div>

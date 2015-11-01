@@ -1,9 +1,9 @@
 {% for article in articles %}
-    
+
     <article class="collection-item row">
-        <div class="item-header header-color-{{ article.id%4 }} col s4 waves-effect"><a href="/article/{{article.slug}}"><img src="/images/article-cache/{{article.hashid}}_4x2.jpg" /></a></div>
+        <div class="item-header header-color-{{ article.id%4 }} col s4 waves-effect"><a href="/a/{{article.slug}}" class="ps-load"><img src="/images/article-cache/{{article.hashid}}_4x4.jpg" /></a></div>
         <div class="item-info col s8">
-            <h2 class="headline"><a href="/article/{{article.slug}}">{{article.headline}}</a></h2>
+            <h2 class="headline"><a href="/a/{{article.slug}}" class="ps-load" data-page="article">{{article.headline}}</a></h2>
             <div class="item-stats">
                 <span class="author"><i class="material-icons">person</i>{{article.author}}</span>
                 <span class="time"><i class="material-icons">schedule</i>{{article.date}}</span>
@@ -13,3 +13,16 @@
     </article>
 
 {% endfor %}
+<div class="pageloader-wrapper">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>

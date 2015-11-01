@@ -1,12 +1,12 @@
 .header-color-1 {
-    @include background-image(linear-gradient(to bottom right, color("blue","lighten-2"), color("red","lighten-2")));
+    @include background(linear-gradient(to bottom right, color("blue","lighten-2"), color("red","lighten-2")));
 }
 .header-color-2 {
-    @include background-image(linear-gradient(to bottom right, color("green","lighten-2"), color("indigo","lighten-2")));
+    @include background(linear-gradient(to bottom right, color("green","lighten-2"), color("indigo","lighten-2")));
 }
 .header-color-3 {
-    @include background-image(linear-gradient(to bottom right, color("red","lighten-2"), color("green","lighten-2")));
+    @include background(linear-gradient(to bottom right, color("red","lighten-2"), color("green","lighten-2")));
 }
 .header-color-0 {
-    @include background-image(linear-gradient(to bottom right, color("cyan","lighten-2"), color("purple","lighten-2")));
+    @include background(linear-gradient(to bottom right, color("cyan","lighten-2"), color("purple","lighten-2")));
 }

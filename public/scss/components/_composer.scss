@@ -11,31 +11,37 @@
     padding-bottom: 2rem;
     overflow-y: auto;
     background-color: white;
-    
+
     form {
         padding: 1.5rem 0.75rem;
-        
-        button[type="submit"] {
-            &:before {
-                content: "";
-                height: 100%;
-                display: inline-block;
-                vertical-align: middle;
+        .actions {
+            float: right;
+            margin-top: 2rem;
+            button[type="submit"] {
+                &:before {
+                    content: "";
+                    height: 100%;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                .preloader-wrapper {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
             }
-            .preloader-wrapper {
-                display: inline-block;
-                vertical-align: middle;
-            }
+        }
+        .col.m6 {
+          padding-left: 0;
         }
     }
 }
 
 #preview {
-    
+
     article {
-        
+
         .article-header {
-            
+
             .dz-message {
                 position: absolute;
                 top: 50%;
@@ -48,7 +54,7 @@
                 background-color: rgba(255,255,255, 0.5);
                 @include transition(opacity 0.25s ease);
                 @include transform(translateY(-50%));
-                
+
                 p {
                     position: absolute;
                     top: 50%;
@@ -67,19 +73,19 @@
                         vertical-align: top;
                     }
                 }
-                
+
             }
-            
+
             &:hover {
                 .dz-message {
                     opacity: 1;
                     p {
                         color: white;
                     }
-                    
+
                 }
             }
-            
+
             &.opload {
                 .dz-message {
                     opacity: 1;

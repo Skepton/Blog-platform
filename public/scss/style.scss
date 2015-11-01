@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "compass";
+@import "lib/compass";
 // import materialize
 @import "materialize",
         "components/header-colors",
@@ -12,4 +12,5 @@
         "components/sidebar",
         "components/user",
         "components/front-page",
+        "components/load-animations",
         "components/composer";

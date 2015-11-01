@@ -1,16 +1,16 @@
 <div class="sidebar-content collection articles">
     {% for article in articles %}
-    
+
         <article class="collection-item">
-            
-            <h5 class="headline"><a href="/article/{{article.slug}}">{{article.headline}}</a></h5>
+
+            <h5 class="headline"><a href="/a/{{article.slug}}">{{article.headline}}</a></h5>
             <div class="excerpt bread-text">{% autoescape false %}{{article.body}}{% endautoescape %}</div>
             <div class="post-info">
                 <span class="author"><i class="material-icons">person</i>{{article.author}}</span>
                 <span class="time"><i class="material-icons">schedule</i>{{article.date}}</span>
             </div>
-            
+
         </article>
-    
+
     {% endfor %}
 </div>
