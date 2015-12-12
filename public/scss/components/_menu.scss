@@ -38,6 +38,19 @@
             float: left;
             li {
                 position: relative;
+                padding: 0 0.5rem;
+                a {
+                    font-size: 1.1rem;
+                    padding: 0 1.1rem;
+                }
+                span {
+                    height: auto;
+                    display: inline-block;
+                    vertical-align: text-bottom;
+                    line-height: 1.5rem;
+                    font-size: 1.75rem;
+                    margin: 0 0.4rem -0.1rem 0;
+                }
                 ul {
                     position: absolute;
                     top: 100%;
@@ -64,7 +77,6 @@
             li:hover {
                 a {
                     color: #222;
-                    @include text-shadow(0px 0px 0.5px #222);
                 }
                 ul {
                     @include transform(translateY(0%));
@@ -72,13 +84,13 @@
                 }
             }
             li.active {
-                background-color: transparent;
-                @include box-shadow(inset 0px -3px 0px color("blue","lighten-2"));
-                a {
-                    @include text-shadow(0px 0px 0.5px #222);
+                background-color: white;
+                > a {
+                    font-weight: bold;
+                    @include box-shadow(inset 0px -3px 0px color("blue","lighten-2"));
                 }
                 &:hover {
-                    background-color: rgba(0, 0, 0, 0.06);
+                    background-color: #f0f0f0;
                 }
             }
         }

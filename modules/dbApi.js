@@ -41,7 +41,6 @@ module.exports = {
 
 			Knex.raw('SELECT Posts.*, User.displayname FROM Posts JOIN Users as User ON user.id = Posts.author JOIN hasCategory ON Posts.hashid = hasCategory.article JOIN Categories ON hasCategory.category = Categories.id WHERE Categories.slug = ? AND hasCategory.subCategory = ? ORDER BY Posts.updated_at desc LIMIT 15', [category, subCategory]).then(function(rows){
 				if (rows){
-
 					rows.forEach(function(row){
 						var date = new moment(row.updated_at).fromNow();
 						var parsedPost = markdown(row.headline, row.body, 1, row.header);
@@ -116,7 +115,7 @@ module.exports = {
 
 		if (article){
 
-			Knex.raw('SELECT Posts.*, User.* FROM Posts JOIN Users as User ON user.id = Posts.author WHERE Posts.slug = ? OR Posts.hashid = ? ORDER BY Posts.updated_at desc LIMIT 1', [article, article]).then(function(rows){
+			Knex.raw('SELECT Posts.*, User.displayname, User.picture, User.about FROM Posts JOIN Users as User ON user.id = Posts.author WHERE Posts.slug = ? OR Posts.hashid = ? ORDER BY Posts.updated_at desc LIMIT 1', [article, article]).then(function(rows){
 				if (rows) {
 
 					var row = rows[0];

@@ -88,6 +88,17 @@ function loadCategoryContent(category, subCategory, callback){
 
 }
 
+function setMenuActive(category, subCategory) {
+	$('#main-nav').find('li.active').removeClass('active');
+	if(!category && !subCategory){
+		$('#main-nav').find('a.all').parents('li').addClass('active');
+	}else if(category && subCategory){
+		$('#main-nav').find('a.'+category).parents('li').addClass('active');
+		$('#main-nav').find('a.'+category).parents('li').find('a.'+subCategory).parents('li').addClass('active');
+	}else {
+		$('#main-nav').find('a.'+category).parents('li').addClass('active');
+	}
+}
 /* Routing */
 
 function routeAction(route, back){
@@ -97,14 +108,21 @@ function routeAction(route, back){
 	if ( RoutePattern.fromString("/").matches(url) ) {
 		/* ROUTING: INDEX*/
 
-		$('body').attr('class','front-page in');
+		$('#page-wrapper').addClass('old');
+
+		setMenuActive();
 
 		loadIndexContent(function(response){
 			if(!back){
 				history.pushState({'route': url, 'page': 'category'}, 'Blogger', url);
 			}
 
-			$('#page-wrapper').html(response);
+			$('body').attr('class','front-page in');
+			$('<div id="page-wrapper" class="new">'+response+'</div>').insertBefore('#page-wrapper');
+			window.requestAnimationFrame(function(){
+				$('#page-wrapper.new').removeClass('new');
+				$('#page-wrapper.old').remove();
+			});
 
 			loadComments('latest', function(response){
 				$('#sidebar').html(response);
@@ -114,7 +132,6 @@ function routeAction(route, back){
 
 			window.requestAnimationFrame(function(){
 				$('#page-wrapper').addClass('initial');
-				$('#page-wrapper').removeClass('transition-out');
 			});
 
 			$('body .pixel-tracker').remove();
@@ -126,17 +143,24 @@ function routeAction(route, back){
 	else if (RoutePattern.fromString("/c/:category").matches(url) || RoutePattern.fromString("/c/:category/:subcategory").matches(url)) {
 		/* ROUTING: CATEGORY*/
 
-		$('body').attr('class','category-page in');
+		$('#page-wrapper').addClass('old');
 
 		var category = RoutePattern.fromString("/c/:category").match(url) ? RoutePattern.fromString("/c/:category").match(url).namedParams.category : RoutePattern.fromString("/c/:category/:subcategory").match(url).namedParams.category;
 		var subCategory = RoutePattern.fromString("/c/:category/:subcategory").matches(url) ? RoutePattern.fromString("/c/:category/:subcategory").match(url).namedParams.subcategory : null;
+
+		setMenuActive(category, subCategory);
 
 		loadCategoryContent(category, subCategory, function(response){
 			if(!back){
 				history.pushState({'route': url, 'page': 'category'}, 'Blogger', url);
 			}
 
-			$('#page-wrapper').html(response);
+			$('body').attr('class','category in');
+			$('<div id="page-wrapper" class="new">'+response+'</div>').insertBefore('#page-wrapper');
+			window.requestAnimationFrame(function(){
+				$('#page-wrapper.new').removeClass('new');
+				$('#page-wrapper.old').remove();
+			});
 
 			loadComments('latest', function(response){
 				$('#sidebar').html(response);
@@ -146,7 +170,6 @@ function routeAction(route, back){
 
 			window.requestAnimationFrame(function(){
 				$('#page-wrapper').addClass('initial');
-				$('#page-wrapper').removeClass('transition-out');
 			});
 
 			$('body .pixel-tracker').remove();
@@ -158,8 +181,7 @@ function routeAction(route, back){
 	else if (RoutePattern.fromString("/a/:article").matches(url)) {
 		/* ROUTING: ARTICLE*/
 
-		$('body').attr('class','article in');
-		$('#page-wrapper').removeClass('transition-out');
+		$('#page-wrapper').addClass('old');
 
 		var article = RoutePattern.fromString("/a/:article").match(url).namedParams.article;
 
@@ -168,19 +190,23 @@ function routeAction(route, back){
 				history.pushState({'route': url, 'page': 'article'}, 'Blogger', url);
 			}
 
-			$('#page-wrapper').html(response);
+			$('body').attr('class','article in');
+			$('<div id="page-wrapper" class="new">'+response+'</div>').insertBefore('#page-wrapper');
+			$('#page-wrapper.new .article-header img').on('load', function(){
+				$('#page-wrapper.old').remove();
+				$('#page-wrapper.new').removeClass('new');
+			});
 
 			loadComments(article, function(response){
 				$('#comment-content').html(response);
 			});
-
-			$(window).trigger('resize');
 
 			$('.parallax').parallax();
 			$('.materialboxed').materialbox();
 
 			window.requestAnimationFrame(function(){
 				$('#page-wrapper').addClass('initial');
+				$(window).trigger('resize');
 			});
 
 			$('body .pixel-tracker').remove();
@@ -306,8 +332,8 @@ $(document).ready(function(){
 $(document).on('click', '.ps-load', function(e){
 	e.preventDefault();
 	var url = $(this).attr('href');
-	$('#page-wrapper').addClass('transition-out');
+	$('#page-wrapper').addClass('old');
 	setTimeout(function(){
 		routeAction(url);
-	},500);
+	},200);
 });

@@ -1,11 +1,19 @@
 .post-list-wrapper.post-list-wrapper {
     float: none;
     vertical-align: top;
-    padding: 1rem;
     border-top: none;
     background-color: white;
+    min-height: calc(100vh - 97px);
     .collection-item {
         padding: 1.5rem;
+        &:hover {
+            background-color: #fafafa;
+            .item-info {
+                &:after {
+                    background: linear-gradient(transparent, #fafafa);
+                }
+            }
+        }
         .item-header {
             overflow: hidden;
             height: 200px;
@@ -47,7 +55,7 @@
                 i {
                     font-size: 1.25rem;
                     vertical-align: middle;
-                    margin-top: -0.2rem;
+                    margin-top: -0.1rem;
                     margin-right: 0.25rem;
                 }
                 span:last-of-type {

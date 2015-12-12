@@ -11,14 +11,14 @@
                         <li><a href="/admin">Admin</a></li>
                     {% endif %}
                     {% if user %}
-                        <li><a href="/user/settings">Settings</a></li>
+                        <li><a href="/u/settings">Settings</a></li>
                         <li><a href="/logout">Logout</a></li>
                     {% else %}
                         <li><a href="/login">Login</a></li>
                     {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li {% if !active %}class="active"{% endif %}><a class="waves-effect" href="/">All</a>
+                    <li><a class="waves-effect" href="/">All</a>
                         <ul>
                             <li><a class="waves-effect" href="/all/news">News</a></li>
                             <li><a class="waves-effect" href="/all/articles">Articles</a></li>
@@ -27,7 +27,7 @@
                         </ul>
                     </li>
                     {% for item in menu %}
-                        <li {% if active == item.slug %}class="active"{% endif %}><a class="waves-effect" href="/c/{{item.slug}}">{{item.title}}</a>
+                        <li><a class="waves-effect" href="/c/{{item.slug}}">{{item.title}}</a>
                             <ul>
                                 <li><a class="waves-effect" href="/{{item.slug}}/news">News</a></li>
                                 <li><a class="waves-effect" href="/{{item.slug}}/articles">Articles</a></li>
@@ -40,7 +40,7 @@
             </div>
 
             <ul id="main-nav" class="hide-on-med-and-down">
-                <li {% if !active %}class="active"{% endif %}><a class="waves-effect ps-load" href="/">All</a>
+                <li><a class="waves-effect ps-load all" href="/"><span class="material-icons">home</span>All</a>
                     <ul>
                         <li><a class="waves-effect ps-load" href="/c/all/news">News</a></li>
                         <li><a class="waves-effect ps-load" href="/c/all/articles">Articles</a></li>
@@ -49,12 +49,19 @@
                     </ul>
                 </li>
                 {% for item in menu %}
-                    <li {% if active == item.slug %}class="active"{% endif %}><a class="waves-effect ps-load" href="/c/{{item.slug}}">{{item.title}}</a>
+                    <li>
+                        <a class="waves-effect ps-load {{item.slug}}" href="/c/{{item.slug}}">
+                            {% if item.slug === 'movies' %}<span class="material-icons">local_movies</span>{% endif %}
+                            {% if item.slug === 'games' %}<span class="material-icons">games</span>{% endif %}
+                            {% if item.slug === 'tv-series' %}<span class="material-icons">live_tv</span>{% endif %}
+                            {% if item.slug === 'tech' %}<span class="material-icons">radio</span>{% endif %}
+                            {{item.title}}
+                        </a>
                         <ul>
-                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/news">News</a></li>
-                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/articles">Articles</a></li>
-                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/reviews">Reviews</a></li>
-                            <li><a class="waves-effect ps-load" href="/c/{{item.slug}}/media">Videos & Media</a></li>
+                            <li><a class="waves-effect ps-load news" href="/c/{{item.slug}}/news">News</a></li>
+                            <li><a class="waves-effect ps-load articles" href="/c/{{item.slug}}/articles">Articles</a></li>
+                            <li><a class="waves-effect ps-load reviews" href="/c/{{item.slug}}/reviews">Reviews</a></li>
+                            <li><a class="waves-effect ps-load media" href="/c/{{item.slug}}/media">Videos & Media</a></li>
                         </ul>
                     </li>
                 {% endfor %}
